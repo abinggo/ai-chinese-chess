@@ -3,6 +3,7 @@ from chinese_chess import ChineseChess
 import requests
 import random
 import json
+import os
 
 app = Flask(__name__)
 
