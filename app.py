@@ -10,17 +10,17 @@ app = Flask(__name__)
 AI_CONFIG = {
     "Deepseek": {
         "model": "deepseek-chat",
-        "api_key": "sk-d9df25ce6cc74c3dbc0086e1974a65aa",
+        "api_key": os.environ.get("DEEPSEEK_API_KEY"),
         "base_url": "https://api.deepseek.com/v1"
     },
     "Qwen": {
         "model": "qwen3-max",
-        "api_key": "sk-540686a29e8040789f17af441806f947",
+        "api_key": os.environ.get("QWEN_API_KEY"),
         "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
     },
     "Kimi": {
         "model": "kimi-k2-0905-preview",
-        "api_key": "sk-jFKBWoSn6SNWopO1gv2lzbiLf28rAzC6DDkbb7wnJYsEa2wW",
+        "api_key": os.environ.get("KIMI_API_KEY"),
         "base_url": "https://api.moonshot.cn/v1"
     }
 }
