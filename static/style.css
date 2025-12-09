@@ -1,0 +1,161 @@
+body {
+    margin: 0;
+    font-family: "KaiTi", "SimSun", serif;
+    background-color: #f7f1e3;
+    overflow: hidden;
+}
+
+/* --- 启动遮罩 --- */
+.overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.menu-box {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    width: 400px;
+}
+.menu-box button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    background: #d35400;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+.menu-box button:hover { background: #e67e22; }
+
+/* --- 游戏主界面 --- */
+.hidden { display: none; }
+.header-bar {
+    padding: 10px 20px;
+    background: #2c3e50;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-layout {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    gap: 30px;
+}
+
+/* --- 棋盘 (CSS画图) --- */
+.board-wrapper {
+    padding: 20px;
+    background: #8B4513;
+    border-radius: 5px;
+    box-shadow: 5px 10px 15px rgba(0,0,0,0.4);
+}
+
+.board {
+    width: 450px;  /* 9列 * 50px */
+    height: 500px; /* 10行 * 50px */
+    background-color: #DEB887; /* 木纹色 */
+    position: relative;
+    border: 2px solid #5c3a19;
+}
+
+/* 网格线 */
+.grid-lines {
+    position: absolute;
+    top: 25px; left: 25px;
+    width: 400px; height: 450px;
+    background-image: 
+        linear-gradient(#5c3a19 1px, transparent 1px),
+        linear-gradient(90deg, #5c3a19 1px, transparent 1px);
+    background-size: 50px 50px;
+    border-top: 1px solid #5c3a19;
+    border-left: 1px solid #5c3a19;
+}
+
+/* 楚河汉界 - 遮住中间的线 */
+.river {
+    position: absolute;
+    top: 226px; left: 26px;
+    width: 398px; height: 48px;
+    background: #DEB887;
+    text-align: center;
+    line-height: 48px;
+    font-size: 24px;
+    color: #5c3a19;
+    z-index: 0;
+}
+
+/* --- 棋子 --- */
+.piece {
+    width: 44px;
+    height: 44px;
+    position: absolute;
+    border-radius: 50%;
+    background: #fbdca9;
+    border: 2px solid #8e5e2e;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+    user-select: none;
+    
+    /* 核心动画：位置变化时平滑过渡 */
+    transition: top 0.3s ease-out, left 0.3s ease-out, transform 0.1s;
+}
+
+.piece:hover { transform: scale(1.1); z-index: 20; }
+.piece.selected { background-color: #ffd700; border-color: red; box-shadow: 0 0 10px red; }
+
+.piece.red { color: #c0392b; }
+.piece.black { color: #2c3e50; }
+
+/* 侧边栏 */
+.sidebar { width: 300px; }
+.log-box {
+    height: 400px;
+    overflow-y: auto;
+    background: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+/* --- 新增：空白格子的样式 --- */
+.empty-cell {
+    width: 44px;
+    height: 44px;
+    position: absolute;
+    border-radius: 50%;
+    /* 背景透明，但需要有 pointer-events 才能被点击 */
+    background: transparent; 
+    z-index: 5; /* 层级比棋子低一点，比棋盘高 */
+    cursor: pointer;
+}
+
+/* 鼠标悬停在空白格时，显示一个小圆点提示（可选，为了交互体验） */
+.empty-cell:hover {
+    background: rgba(0, 0, 0, 0.1); /* 淡淡的灰色 */
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* 如果选中了棋子，空白格的提示更明显一点 */
+.board.selecting .empty-cell:hover {
+    background: rgba(0, 128, 0, 0.2); /* 绿色提示可以走 */
+    border: 1px dashed green;
+}
